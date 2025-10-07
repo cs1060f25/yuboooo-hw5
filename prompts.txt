@@ -1,0 +1,21 @@
+5.2: Try to Use Generative AI to Build a SQL Injection Attack (15 points)
+
+In 2025-10-02's lecture, we showed the following vulnerable SQL code as a bad implementation of Homework 4's county_data endpoint, which is currently running on https://cat-hw4.vercel.app/county_dataLinks to an external site.. (If you look at it with a browser, it will fail because a browser sends a GET, not the required POST request.) 
+
+sql = f"select * from county_health_rankings where county = '{county}' and state = '{state}' and measure_name = '{measure_name}'"
+cursor = conn.execute(sql)
+Create a file called test.json that has the following data:
+
+{"zip":"84601","measure_name":"Adult obesity"}
+Use it with curl to test the endpoint:
+
+$ curl -X POST https://cat-hw4.vercel.app/county_data -H "Content-Type: application/json" -d @test.json
+[{"confidence_interval_lower_bound":"0.17","confidence_interval_upper_bound":"0.22","county":"Utah County", ...
+Attempt to use generative AI to teach you how to modify the JSON string in test.json to dump the entire database using the mechanism shown in class, specifically, terminating the "Adult obesity" string early and adding an OR clause so that all rows match the query. Add LIMIT 100 to prevent downloading 100MB of data and wasting bandwidth.
+
+Put the malicious JSON in attack.json. Put your prompts only (no output) in prompts.txt.
+
+In your README.md file, include a section on the model names you attempted the prompts on. If you had resistance from any model to help you complete an attack, discuss what guardrails were in place, and how you got around them (or weren't able to.)
+
+
+Write the sql-injection in attack.json
